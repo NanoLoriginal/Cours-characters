@@ -1,37 +1,27 @@
-var config = {
-    type: Phaser.WEBGL,
-    width: 800,
-    height: 600,
-    backgroundColor: '#2d2d2d',
-    pixelArt: true,
-    parent: 'phaser-example',
-    scene: {
-        preload: preload,
-        create: create
-    }
-};
-
-var game = new Phaser.Game(config);
-
-function preload ()
+create()
 {
-    this.load.image('cokecan', 'assets/sprites/cokecan.png');
-}
-
-function create ()
-{
-    var marker = this.add.image(100, 100, 'cokecan').setAlpha(0.3);
-    var image = this.add.image(100, 100, 'cokecan');
-
-    //  flipY will call toggleFlipY on the image whenever it yoyos or repeats
-
-    var tween = this.tweens.add({
-        targets: image,
-        x: 600,
-        ease: 'Power1',
-        duration: 3000,
-        flipY: true,
-        yoyo: true,
+    this.idle = this.add.sprite(0, 0, 'animation').setOrigin(0,0);
+    console.log(frames)
+    this.anims.create({
+        key: 'animation',
+        frames: this.getFrames("animation",longueur),
+        frameRate: 12,
         repeat: -1
     });
+    this.idle.play('animation');
+
+}
+
+/**
+ * Renvoie un tableau d'images
+ * @param prefix
+ * @param length
+ * @returns {*[]}
+ */
+getFrames(prefix,length){
+    let frames=[];
+    for (let i=1;i<=length;i++){
+        frames.push({key: prefix+i});
+    }
+    return frames;
 }
